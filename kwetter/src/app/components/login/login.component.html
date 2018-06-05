@@ -1,0 +1,20 @@
+<mat-card>
+    <p *ngIf="errorMessageState">
+        {{errorMessage}}
+    </p>
+    <form class="login-container">
+    <mat-form-field>
+        <input matInput placeholder="Username" [(ngModel)]="username" name="username">
+    </mat-form-field>
+
+    <mat-form-field >
+        <input matInput placeholder="Password" [(ngModel)]="password" name="password" type="password">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="login()">Login</button>
+    </form>
+    <mat-divider></mat-divider>
+    <p><a href="/register">
+        Don't have an account yet? Click here
+    </a></p>
+</mat-card>

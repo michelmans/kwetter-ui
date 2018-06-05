@@ -1,0 +1,29 @@
+
+<mat-card>
+    <h3>Account</h3>
+    <p *ngIf="loginState"><a href="/profile/{{username}}">@{{username}}</a><br><a href="{{website}}">{{website}}</a><br>{{bio}}</p>
+    <button mat-raised-button color="primary" (click)="loginButtonClick()">{{loginButtonText}}</button>
+
+</mat-card>
+
+<mat-card *ngIf="loginState">
+    <h3>Post a tweet</h3>
+    <form>
+        <textarea matInput placeholder="Tweettext" [(ngModel)]="tweetText" name="tweetText" maxlength="200"></textarea>
+      <button mat-raised-button color="primary" (click)="postTweet()">Post tweet</button>
+    </form>
+
+</mat-card>
+
+<mat-card>
+    <h2>Timeline</h2>
+    <div *ngFor="let tweet of allTweets | paginate: { itemsPerPage: 10, currentPage: p }">
+        <div>
+            <h3>{{tweet.text}}</h3>
+            <span><a href="/profile/{{tweet.profile.username}}">@{{tweet.profile.username}}</a> - {{tweet.creationDate | date:'HH:mm dd-MM-yyyy'}}</span>
+            <p></p>
+        </div>
+    </div>
+
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
+</mat-card>

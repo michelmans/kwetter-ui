@@ -1,0 +1,44 @@
+<mat-card class="profile">
+    <mat-card-content>
+        <h3>{{profile.username}}</h3>
+        <mat-list role="list">
+            <mat-list-item role="listitem"><strong>Website:</strong> {{profile.website}}</mat-list-item>
+            <mat-list-item role="listitem"><strong>Bio:</strong> {{profile.bio}}</mat-list-item>
+        </mat-list>
+
+        <button *ngIf="buttonState()" mat-raised-button color="primary" (click)="followAction()" >{{followButtonText}}</button>
+        <mat-tab-group>
+            <mat-tab label="Timeline ({{tweetCount}})">
+                <div class="timeline">
+                    <h2>Timeline ({{tweetCount}})</h2>
+                    <div *ngFor="let tweet of allTweets | paginate: { itemsPerPage: 10, currentPage: p }">
+                        <div>
+                            <h3>{{tweet.text}}</h3>
+                            <span><a href="/profile/{{tweet.profile.username}}">@{{tweet.profile.username}}</a> - {{tweet.creationDate | date:'HH:mm dd-MM-yyyy'}}</span>
+                            <p></p>
+                        </div>
+                    </div>
+                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                </div>
+            </mat-tab>
+
+            <mat-tab label="Followers ({{followerCount}})">
+                <h2>Followers ({{followerCount}})</h2>
+                <table>
+                    <tr *ngFor="let followerF of followersFetched">
+                        <td><a class="profileLink" href="/profile/{{followerF.username}}">{{followerF.username}}</a></td>
+                    </tr>
+                </table>
+            </mat-tab>
+
+            <mat-tab label="Following ({{followingCount}})">
+                <h2>Following ({{followingCount}})</h2>
+                <table>
+                    <tr *ngFor="let followingF of followingFetched">
+                        <td><a class="profileLink" href="/profile/{{followingF.username}}">{{followingF.username}}</a></td>
+                    </tr>
+                </table>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-card-content>
+</mat-card>
